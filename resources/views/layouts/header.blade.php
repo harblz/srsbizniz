@@ -1,10 +1,10 @@
-<section class="hero is-primary is-medium">
+<section class="hero is-full is-dark is-bold">
   <!-- Hero header: will stick at the top -->
   <div class="hero-head">
     <header class="nav">
       <div class="container">
         <div class="nav-left">
-          <a class="nav-item">
+          <a href="/" class="nav-item">
             Srs Bizniz
           </a>
         </div>
@@ -18,17 +18,17 @@
             Home
           </a>
           <a class="nav-item">
-            Examples
+            My Projects
           </a>
           <a class="nav-item">
-            Documentation
+            Resume
           </a>
           <span class="nav-item">
-            <a class="button is-primary is-inverted">
+            <a href="https://github.com/harblz" class="button is-primary is-inverted">
               <span class="icon">
                 <i class="fa fa-github"></i>
               </span>
-              <span>Download</span>
+              <span>Github</span>
             </a>
           </span>
         </div>

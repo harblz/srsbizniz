@@ -11,9 +11,23 @@ let routes = [
   },
   {
 
+    path: '/posts',
+
+    component: require('./views/Posts.vue')
+
+  },
+  {
+
     path: '/about',
 
     component: require('./views/About.vue')
+
+  },
+  {
+
+    path: '/contact',
+
+    component: require('./views/Contact.vue')
 
   },
 ];
