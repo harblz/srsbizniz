@@ -15,13 +15,14 @@
         </span>
         <div class="nav-right nav-menu">
           <a class="nav-item is-active">
-            Home
+            <router-link to="/">
+                Home
+            </router-link>
           </a>
           <a class="nav-item">
-            My Projects
-          </a>
-          <a class="nav-item">
-            Resume
+            <router-link to="/projects">
+                My Projects
+            </router-link>
           </a>
           <span class="nav-item">
             <a href="https://github.com/harblz" class="button is-primary is-inverted">

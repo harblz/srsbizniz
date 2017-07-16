@@ -83,8 +83,8 @@
                 <h5>Fifth level</h5>
                 <p>Aliquam sagittis rhoncus vulputate. Cras non luctus sem, sed tincidunt ligula. Vestibulum at nunc elit. Praesent aliquet ligula mi, in luctus elit volutpat porta. Phasellus molestie diam vel nisi sodales, a eleifend augue laoreet. Sed nec eleifend justo. Nam et sollicitudin odio.</p>
                 <figure>
-                  <img src="http://bulma.io/images/placeholders/256x256.png">
-                  <img src="http://bulma.io/images/placeholders/256x256.png">
+                  <img src="images/256x256.png">
+                  <img src="images/256x256.png">
                   <figcaption>
                     Figure 1: Some beautiful placeholders
                   </figcaption>
@@ -102,6 +102,8 @@
     export default {
         mounted() {
             console.log('Component mounted.')
+            document.getElementById('app').style.display = "block";
         }
     }
+
 </script>

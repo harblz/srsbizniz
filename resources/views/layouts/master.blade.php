@@ -24,7 +24,9 @@
         <meta name="msapplication-TileImage" content="img//favicon/ms-icon-144x144.png">
         <meta name="theme-color" content="#ffffff">
 
-        <title>Laravel</title>
+        <link href="/alloy-editor/assets/alloy-editor-ocean-min.css" rel="stylesheet">
+
+        <title>Srs Bizniz</title>
 
         <link rel="stylesheet" href="/css/app.css">
         <link rel="stylesheet" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
@@ -37,7 +39,7 @@
     <body>
 
 
-      <div id="app">
+      <div id="app" style="display: none;">
 
         @include('layouts.header')
 
@@ -53,6 +55,8 @@
       </div>
 
       <script src="/js/vendor.js"></script>
+
+      <script src="alloy-editor/alloy-editor-all-min.js"></script>
 
       <script src="/js/app.js"></script>
 

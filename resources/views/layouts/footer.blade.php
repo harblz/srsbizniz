@@ -2,7 +2,7 @@
   <div class="container">
     <div class="content has-text-centered">
       <p>
-        <strong>Srs Bizniz</strong> is pronounced <i>Serious Business</i>.
+        <strong>AMR</strong>. It's pronounced <i>Serious Business</i>.
       </p>
       <p>
         <a class="icon" href="https://github.com/harblz">

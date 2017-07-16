@@ -6,7 +6,7 @@
                 <article class="media">
                   <figure class="media-left">
                     <p class="image is-64x64">
-                      <img src="http://bulma.io/images/placeholders/128x128.png">
+                      <img src="/images/128x128.png">
                     </p>
                   </figure>
                   <div class="media-content">
@@ -43,6 +43,7 @@
     export default {
         mounted() {
             console.log('Component mounted.')
+            document.getElementById('app').style.display = "block";
         }
     }
 </script>

@@ -21,16 +21,19 @@
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
-    "vue": "^2.1.10",
+    "vue": "^2.4.1",
     "vue-router": "^2.7.0",
-    "webpack": "^3.1.0"
+    "vue-template-compiler": "^2.4.1",
+    "webpack": "^3.2.0"
   },
   "dependencies": {
     "bulma": "^0.4.3",
     "bulma-loader": "^1.0.1",
+    "ckeditor": "^4.7.1",
     "cross-env": "^5.0.1",
     "font-awesome": "^4.7.0",
     "font-awesome-webpack": "0.0.5-beta.2",
+    "scriptjs": "^2.5.8",
     "vue-cli": "^2.8.2"
   }
 }

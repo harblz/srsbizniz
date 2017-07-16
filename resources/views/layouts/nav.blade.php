@@ -10,11 +10,11 @@
       </router-link>
 
       <router-link tag="li" to="/about">
-        <a>About Me</a>
+        <a>About</a>
       </router-link>
 
       <router-link tag="li" to="/contact">
-        <a>Contact Info</a>
+        <a>Contact</a>
       </router-link>
     </ul>
   </div>

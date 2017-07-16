@@ -1,9 +1,62 @@
 webpackJsonp([0],[
 /* 0 */,
 /* 1 */,
-/* 2 */,
+/* 2 */
+/***/ (function(module, exports) {
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  scopeId,
+  cssModules
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  // inject cssModules
+  if (cssModules) {
+    var computed = options.computed || (options.computed = {})
+    Object.keys(cssModules).forEach(function (key) {
+      var module = cssModules[key]
+      computed[key] = function () { return module }
+    })
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
 /* 3 */,
-/* 4 */
+/* 4 */,
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2516,72 +2569,19 @@ if (inBrowser && window.Vue) {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
-/* 5 */,
 /* 6 */,
 /* 7 */,
 /* 8 */,
 /* 9 */,
 /* 10 */,
-/* 11 */
-/***/ (function(module, exports) {
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  scopeId,
-  cssModules
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  // inject cssModules
-  if (cssModules) {
-    var computed = options.computed || (options.computed = {})
-    Object.keys(cssModules).forEach(function (key) {
-      var module = cssModules[key]
-      computed[key] = function () { return module }
-    })
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
+/* 11 */,
 /* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__routes__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__routes__ = __webpack_require__(39);
 
 
 
@@ -2594,14 +2594,45 @@ new Vue({
 
 });
 
+var toolbars = {
+    add: {
+        buttons: ['image', 'camera', 'hline', 'table'],
+        tabIndex: 2
+    },
+    styles: {
+        selections: AlloyEditor.Selections,
+        tabIndex: 1
+    }
+};
+
+var Selections = [{
+    name: 'link',
+    buttons: ['linkEdit'],
+    test: AlloyEditor.SelectionTest.link
+}, {
+    name: 'image',
+    buttons: ['imageLeft', 'imageRight'],
+    test: AlloyEditor.SelectionTest.image
+}, {
+    name: 'text',
+    buttons: ['styles', 'bold', 'italic', 'underline', 'link', 'twitter'],
+    test: AlloyEditor.SelectionTest.text
+}, {
+    name: 'table',
+    buttons: ['tableRow', 'tableColumn', 'tableCell', 'tableRemove'],
+    getArrowBoxClasses: AlloyEditor.SelectionGetArrowBoxClasses.table,
+    setPosition: AlloyEditor.SelectionSetPosition.table,
+    test: AlloyEditor.SelectionTest.table
+}];
+
 /***/ }),
 /* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_bulma_css_bulma_css__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_bulma_css_bulma_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_bulma_css_bulma_css__);
@@ -3230,36 +3261,43 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 38 */
+/* 38 */,
+/* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(5);
 
 
 var routes = [{
 
     path: '/',
 
-    component: __webpack_require__(39)
+    component: __webpack_require__(40)
 
 }, {
 
     path: '/posts',
 
-    component: __webpack_require__(49)
+    component: __webpack_require__(43)
 
 }, {
 
     path: '/about',
 
-    component: __webpack_require__(42)
+    component: __webpack_require__(46)
 
 }, {
 
     path: '/contact',
 
-    component: __webpack_require__(46)
+    component: __webpack_require__(49)
+
+}, {
+
+    path: '/projects',
+
+    component: __webpack_require__(53)
 
 }];
 
@@ -3272,14 +3310,14 @@ var routes = [{
 }));
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Component = __webpack_require__(11)(
+var Component = __webpack_require__(2)(
   /* script */
-  __webpack_require__(40),
-  /* template */
   __webpack_require__(41),
+  /* template */
+  __webpack_require__(42),
   /* scopeId */
   null,
   /* cssModules */
@@ -3306,7 +3344,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3415,14 +3453,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
         console.log('Component mounted.');
+        document.getElementById('app').style.display = "block";
     }
 });
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "container"
   }, [_c('div', {
@@ -3431,37 +3472,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "column"
   }, [_c('div', {
     staticClass: "content"
-  }, [_c('h1', [_vm._v("Hello World")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('h2', [_vm._v("Second level")]), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c('h3', [_vm._v("Third level")]), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4), _vm._v(" "), _c('blockquote', [_vm._v("Ut venenatis, nisl scelerisque sollicitudin fermentum, quam libero hendrerit ipsum, ut blandit est tellus sit amet turpis.")]), _vm._v(" "), _vm._m(5), _vm._v(" "), _c('p', [_vm._v("Sed sagittis enim ac tortor maximus rutrum. Nulla facilisi. Donec mattis vulputate risus in luctus. Maecenas vestibulum interdum commodo.")]), _vm._v(" "), _vm._m(6), _vm._v(" "), _c('p', [_vm._v("Suspendisse egestas sapien non felis placerat elementum. Morbi tortor nisl, suscipit sed mi sit amet, mollis malesuada nulla. Nulla facilisi. Nullam ac erat ante.")]), _vm._v(" "), _c('h4', [_vm._v("Fourth level")]), _vm._v(" "), _c('p', [_vm._v("Nulla efficitur eleifend nisi, sit amet bibendum sapien fringilla ac. Mauris euismod metus a tellus laoreet, at elementum ex efficitur.")]), _vm._v(" "), _c('pre', [_vm._v("<!DOCTYPE html>\n          <html>\n            <head>\n              <title>Hello World</title>\n            </head>\n            <body>\n              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra nec nulla vitae mollis.</p>\n            </body>\n          </html>")]), _vm._v(" "), _c('p', [_vm._v("Maecenas eleifend sollicitudin dui, faucibus sollicitudin augue cursus non. Ut finibus eleifend arcu ut vehicula. Mauris eu est maximus est porta condimentum in eu justo. Nulla id iaculis sapien.")]), _vm._v(" "), _vm._m(7), _vm._v(" "), _c('p', [_vm._v("Phasellus porttitor enim id metus volutpat ultricies. Ut nisi nunc, blandit sed dapibus at, vestibulum in felis. Etiam iaculis lorem ac nibh bibendum rhoncus. Nam interdum efficitur ligula sit amet ullamcorper. Etiam tristique, leo vitae porta faucibus, mi lacus laoreet metus, at cursus leo est vel tellus. Sed ac posuere est. Nunc ultricies nunc neque, vitae ultricies ex sodales quis. Aliquam eu nibh in libero accumsan pulvinar. Nullam nec nisl placerat, pretium metus vel, euismod ipsum. Proin tempor cursus nisl vel condimentum. Nam pharetra varius metus non pellentesque.")]), _vm._v(" "), _c('h5', [_vm._v("Fifth level")]), _vm._v(" "), _c('p', [_vm._v("Aliquam sagittis rhoncus vulputate. Cras non luctus sem, sed tincidunt ligula. Vestibulum at nunc elit. Praesent aliquet ligula mi, in luctus elit volutpat porta. Phasellus molestie diam vel nisi sodales, a eleifend augue laoreet. Sed nec eleifend justo. Nam et sollicitudin odio.")]), _vm._v(" "), _vm._m(8), _vm._v(" "), _c('h6', [_vm._v("Sixth level")]), _vm._v(" "), _c('p', [_vm._v("Cras in nibh lacinia, venenatis nisi et, auctor urna. Donec pulvinar lacus sed diam dignissim, ut eleifend eros accumsan. Phasellus non tortor eros. Ut sed rutrum lacus. Etiam purus nunc, scelerisque quis enim vitae, malesuada ultrices turpis. Nunc vitae maximus purus, nec consectetur dui. Suspendisse euismod, elit vel rutrum commodo, ipsum tortor maximus dui, sed varius sapien odio vitae est. Etiam at cursus metus.")])], 1)])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('p', [_vm._v("Lorem ipsum"), _c('sup', [_c('a', [_vm._v("[1]")])]), _vm._v(" dolor sit amet, consectetur adipiscing elit. Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque. Sub"), _c('sub', [_vm._v("script")]), _vm._v(" works as well!")])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('p', [_vm._v("Curabitur accumsan turpis pharetra "), _c('strong', [_vm._v("augue tincidunt")]), _vm._v(" blandit. Quisque condimentum maximus mi, sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis. Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis. Donec at dignissim dui. Ut et neque nisl.")])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('ul', [_c('li', [_vm._v("In fermentum leo eu lectus mollis, quis dictum mi aliquet.")]), _vm._v(" "), _c('li', [_vm._v("Morbi eu nulla lobortis, lobortis est in, fringilla felis.")]), _vm._v(" "), _c('li', [_vm._v("Aliquam nec felis in sapien venenatis viverra fermentum nec lectus.")]), _vm._v(" "), _c('li', [_vm._v("Ut non enim metus.")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('p', [_vm._v("Quisque ante lacus, malesuada ac auctor vitae, congue "), _c('a', {
+  }, [_c('h1', [_vm._v("Hello World")]), _vm._v(" "), _c('p', [_vm._v("Lorem ipsum"), _c('sup', [_c('a', [_vm._v("[1]")])]), _vm._v(" dolor sit amet, consectetur adipiscing elit. Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque. Sub"), _c('sub', [_vm._v("script")]), _vm._v(" works as well!")]), _vm._v(" "), _c('h2', [_vm._v("Second level")]), _vm._v(" "), _c('p', [_vm._v("Curabitur accumsan turpis pharetra "), _c('strong', [_vm._v("augue tincidunt")]), _vm._v(" blandit. Quisque condimentum maximus mi, sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis. Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis. Donec at dignissim dui. Ut et neque nisl.")]), _vm._v(" "), _c('ul', [_c('li', [_vm._v("In fermentum leo eu lectus mollis, quis dictum mi aliquet.")]), _vm._v(" "), _c('li', [_vm._v("Morbi eu nulla lobortis, lobortis est in, fringilla felis.")]), _vm._v(" "), _c('li', [_vm._v("Aliquam nec felis in sapien venenatis viverra fermentum nec lectus.")]), _vm._v(" "), _c('li', [_vm._v("Ut non enim metus.")])]), _vm._v(" "), _c('h3', [_vm._v("Third level")]), _vm._v(" "), _c('p', [_vm._v("Quisque ante lacus, malesuada ac auctor vitae, congue "), _c('a', {
     attrs: {
       "href": "#"
     }
-  }, [_vm._v("non ante")]), _vm._v(". Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.")])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('ol', [_c('li', [_vm._v("Donec blandit a lorem id convallis.")]), _vm._v(" "), _c('li', [_vm._v("Cras gravida arcu at diam gravida gravida.")]), _vm._v(" "), _c('li', [_vm._v("Integer in volutpat libero.")]), _vm._v(" "), _c('li', [_vm._v("Donec a diam tellus.")]), _vm._v(" "), _c('li', [_vm._v("Aenean nec tortor orci.")]), _vm._v(" "), _c('li', [_vm._v("Quisque aliquam cursus urna, non bibendum massa viverra eget.")]), _vm._v(" "), _c('li', [_vm._v("Vivamus maximus ultricies pulvinar.")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('p', [_vm._v("Quisque at semper enim, eu hendrerit odio. Etiam auctor nisl et "), _c('em', [_vm._v("justo sodales")]), _vm._v(" elementum. Maecenas ultrices lacus quis neque consectetur, et lobortis nisi molestie.")])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('dl', [_c('dt', [_vm._v("Web")]), _vm._v(" "), _c('dd', [_vm._v("The part of the Internet that contains websites and web pages")]), _vm._v(" "), _c('dt', [_vm._v("HTML")]), _vm._v(" "), _c('dd', [_vm._v("A markup language for creating web pages")]), _vm._v(" "), _c('dt', [_vm._v("CSS")]), _vm._v(" "), _c('dd', [_vm._v("A technology to make HTML look better")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('table', [_c('thead', [_c('tr', [_c('th', [_vm._v("One")]), _vm._v(" "), _c('th', [_vm._v("Two")])])]), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v("Three")]), _vm._v(" "), _c('td', [_vm._v("Four")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Five")]), _vm._v(" "), _c('td', [_vm._v("Six")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Seven")]), _vm._v(" "), _c('td', [_vm._v("Eight")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Nine")]), _vm._v(" "), _c('td', [_vm._v("Ten")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Eleven")]), _vm._v(" "), _c('td', [_vm._v("Twelve")])])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('figure', [_c('img', {
+  }, [_vm._v("non ante")]), _vm._v(". Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.")]), _vm._v(" "), _c('ol', [_c('li', [_vm._v("Donec blandit a lorem id convallis.")]), _vm._v(" "), _c('li', [_vm._v("Cras gravida arcu at diam gravida gravida.")]), _vm._v(" "), _c('li', [_vm._v("Integer in volutpat libero.")]), _vm._v(" "), _c('li', [_vm._v("Donec a diam tellus.")]), _vm._v(" "), _c('li', [_vm._v("Aenean nec tortor orci.")]), _vm._v(" "), _c('li', [_vm._v("Quisque aliquam cursus urna, non bibendum massa viverra eget.")]), _vm._v(" "), _c('li', [_vm._v("Vivamus maximus ultricies pulvinar.")])]), _vm._v(" "), _c('blockquote', [_vm._v("Ut venenatis, nisl scelerisque sollicitudin fermentum, quam libero hendrerit ipsum, ut blandit est tellus sit amet turpis.")]), _vm._v(" "), _c('p', [_vm._v("Quisque at semper enim, eu hendrerit odio. Etiam auctor nisl et "), _c('em', [_vm._v("justo sodales")]), _vm._v(" elementum. Maecenas ultrices lacus quis neque consectetur, et lobortis nisi molestie.")]), _vm._v(" "), _c('p', [_vm._v("Sed sagittis enim ac tortor maximus rutrum. Nulla facilisi. Donec mattis vulputate risus in luctus. Maecenas vestibulum interdum commodo.")]), _vm._v(" "), _c('dl', [_c('dt', [_vm._v("Web")]), _vm._v(" "), _c('dd', [_vm._v("The part of the Internet that contains websites and web pages")]), _vm._v(" "), _c('dt', [_vm._v("HTML")]), _vm._v(" "), _c('dd', [_vm._v("A markup language for creating web pages")]), _vm._v(" "), _c('dt', [_vm._v("CSS")]), _vm._v(" "), _c('dd', [_vm._v("A technology to make HTML look better")])]), _vm._v(" "), _c('p', [_vm._v("Suspendisse egestas sapien non felis placerat elementum. Morbi tortor nisl, suscipit sed mi sit amet, mollis malesuada nulla. Nulla facilisi. Nullam ac erat ante.")]), _vm._v(" "), _c('h4', [_vm._v("Fourth level")]), _vm._v(" "), _c('p', [_vm._v("Nulla efficitur eleifend nisi, sit amet bibendum sapien fringilla ac. Mauris euismod metus a tellus laoreet, at elementum ex efficitur.")]), _vm._v(" "), _c('pre', [_vm._v("<!DOCTYPE html>\n          <html>\n            <head>\n              <title>Hello World</title>\n            </head>\n            <body>\n              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra nec nulla vitae mollis.</p>\n            </body>\n          </html>")]), _vm._v(" "), _c('p', [_vm._v("Maecenas eleifend sollicitudin dui, faucibus sollicitudin augue cursus non. Ut finibus eleifend arcu ut vehicula. Mauris eu est maximus est porta condimentum in eu justo. Nulla id iaculis sapien.")]), _vm._v(" "), _c('table', [_c('thead', [_c('tr', [_c('th', [_vm._v("One")]), _vm._v(" "), _c('th', [_vm._v("Two")])])]), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v("Three")]), _vm._v(" "), _c('td', [_vm._v("Four")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Five")]), _vm._v(" "), _c('td', [_vm._v("Six")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Seven")]), _vm._v(" "), _c('td', [_vm._v("Eight")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Nine")]), _vm._v(" "), _c('td', [_vm._v("Ten")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Eleven")]), _vm._v(" "), _c('td', [_vm._v("Twelve")])])])]), _vm._v(" "), _c('p', [_vm._v("Phasellus porttitor enim id metus volutpat ultricies. Ut nisi nunc, blandit sed dapibus at, vestibulum in felis. Etiam iaculis lorem ac nibh bibendum rhoncus. Nam interdum efficitur ligula sit amet ullamcorper. Etiam tristique, leo vitae porta faucibus, mi lacus laoreet metus, at cursus leo est vel tellus. Sed ac posuere est. Nunc ultricies nunc neque, vitae ultricies ex sodales quis. Aliquam eu nibh in libero accumsan pulvinar. Nullam nec nisl placerat, pretium metus vel, euismod ipsum. Proin tempor cursus nisl vel condimentum. Nam pharetra varius metus non pellentesque.")]), _vm._v(" "), _c('h5', [_vm._v("Fifth level")]), _vm._v(" "), _c('p', [_vm._v("Aliquam sagittis rhoncus vulputate. Cras non luctus sem, sed tincidunt ligula. Vestibulum at nunc elit. Praesent aliquet ligula mi, in luctus elit volutpat porta. Phasellus molestie diam vel nisi sodales, a eleifend augue laoreet. Sed nec eleifend justo. Nam et sollicitudin odio.")]), _vm._v(" "), _c('figure', [_c('img', {
     attrs: {
-      "src": "http://bulma.io/images/placeholders/256x256.png"
+      "src": "images/256x256.png"
     }
   }), _vm._v(" "), _c('img', {
     attrs: {
-      "src": "http://bulma.io/images/placeholders/256x256.png"
+      "src": "images/256x256.png"
     }
-  }), _vm._v(" "), _c('figcaption', [_vm._v("\n                Figure 1: Some beautiful placeholders\n              ")])])
+  }), _vm._v(" "), _c('figcaption', [_vm._v("\n                Figure 1: Some beautiful placeholders\n              ")])]), _vm._v(" "), _c('h6', [_vm._v("Sixth level")]), _vm._v(" "), _c('p', [_vm._v("Cras in nibh lacinia, venenatis nisi et, auctor urna. Donec pulvinar lacus sed diam dignissim, ut eleifend eros accumsan. Phasellus non tortor eros. Ut sed rutrum lacus. Etiam purus nunc, scelerisque quis enim vitae, malesuada ultrices turpis. Nunc vitae maximus purus, nec consectetur dui. Suspendisse euismod, elit vel rutrum commodo, ipsum tortor maximus dui, sed varius sapien odio vitae est. Etiam at cursus metus.")])])])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -3472,14 +3495,164 @@ if (false) {
 }
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Component = __webpack_require__(11)(
+var Component = __webpack_require__(2)(
   /* script */
-  __webpack_require__(43),
-  /* template */
   __webpack_require__(44),
+  /* template */
+  __webpack_require__(45),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\Users\\Alex Raymond\\Projects\\srsbizniz\\resources\\assets\\js\\views\\Posts.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Posts.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-796f8ca1", Component.options)
+  } else {
+    hotAPI.reload("data-v-796f8ca1", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 44 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        console.log('Component mounted.');
+        document.getElementById('app').style.display = "block";
+    }
+});
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "container"
+  }, [_c('div', {
+    staticClass: "columns"
+  }, [_c('div', {
+    staticClass: "column"
+  }, [_c('div', {
+    staticClass: "content"
+  }, [_c('article', {
+    staticClass: "media"
+  }, [_c('figure', {
+    staticClass: "media-left"
+  }, [_c('p', {
+    staticClass: "image is-64x64"
+  }, [_c('img', {
+    attrs: {
+      "src": "/images/128x128.png"
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "media-content"
+  }, [_c('div', {
+    staticClass: "content"
+  }, [_c('p', [_c('strong', [_vm._v("John Smith")]), _vm._v(" "), _c('small', [_vm._v("@johnsmith")]), _vm._v(" "), _c('small', [_vm._v("31m")]), _vm._v(" "), _c('br'), _vm._v("\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.\n                  ")])]), _vm._v(" "), _c('nav', {
+    staticClass: "level is-mobile"
+  }, [_c('div', {
+    staticClass: "level-left"
+  }, [_c('a', {
+    staticClass: "level-item"
+  }, [_c('span', {
+    staticClass: "icon is-small"
+  }, [_c('i', {
+    staticClass: "fa fa-reply"
+  })])]), _vm._v(" "), _c('a', {
+    staticClass: "level-item"
+  }, [_c('span', {
+    staticClass: "icon is-small"
+  }, [_c('i', {
+    staticClass: "fa fa-retweet"
+  })])]), _vm._v(" "), _c('a', {
+    staticClass: "level-item"
+  }, [_c('span', {
+    staticClass: "icon is-small"
+  }, [_c('i', {
+    staticClass: "fa fa-heart"
+  })])])])])])])])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-796f8ca1", module.exports)
+  }
+}
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(47),
+  /* template */
+  __webpack_require__(48),
   /* scopeId */
   null,
   /* cssModules */
@@ -3499,205 +3672,6 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-9db0714a", Component.options)
   } else {
     hotAPI.reload("data-v-9db0714a", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 43 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    }
-});
-
-/***/ }),
-/* 44 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "container"
-  }, [_c('div', {
-    staticClass: "columns"
-  }, [_c('div', {
-    staticClass: "column"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('h1', [_vm._v("About Hello World")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('h2', [_vm._v("Second level")]), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c('h3', [_vm._v("Third level")]), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4), _vm._v(" "), _c('blockquote', [_vm._v("Ut venenatis, nisl scelerisque sollicitudin fermentum, quam libero hendrerit ipsum, ut blandit est tellus sit amet turpis.")]), _vm._v(" "), _vm._m(5), _vm._v(" "), _c('p', [_vm._v("Sed sagittis enim ac tortor maximus rutrum. Nulla facilisi. Donec mattis vulputate risus in luctus. Maecenas vestibulum interdum commodo.")]), _vm._v(" "), _vm._m(6), _vm._v(" "), _c('p', [_vm._v("Suspendisse egestas sapien non felis placerat elementum. Morbi tortor nisl, suscipit sed mi sit amet, mollis malesuada nulla. Nulla facilisi. Nullam ac erat ante.")]), _vm._v(" "), _c('h4', [_vm._v("Fourth level")]), _vm._v(" "), _c('p', [_vm._v("Nulla efficitur eleifend nisi, sit amet bibendum sapien fringilla ac. Mauris euismod metus a tellus laoreet, at elementum ex efficitur.")]), _vm._v(" "), _c('pre', [_vm._v("<!DOCTYPE html>\n          <html>\n            <head>\n              <title>Hello World</title>\n            </head>\n            <body>\n              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra nec nulla vitae mollis.</p>\n            </body>\n          </html>")]), _vm._v(" "), _c('p', [_vm._v("Maecenas eleifend sollicitudin dui, faucibus sollicitudin augue cursus non. Ut finibus eleifend arcu ut vehicula. Mauris eu est maximus est porta condimentum in eu justo. Nulla id iaculis sapien.")]), _vm._v(" "), _vm._m(7), _vm._v(" "), _c('p', [_vm._v("Phasellus porttitor enim id metus volutpat ultricies. Ut nisi nunc, blandit sed dapibus at, vestibulum in felis. Etiam iaculis lorem ac nibh bibendum rhoncus. Nam interdum efficitur ligula sit amet ullamcorper. Etiam tristique, leo vitae porta faucibus, mi lacus laoreet metus, at cursus leo est vel tellus. Sed ac posuere est. Nunc ultricies nunc neque, vitae ultricies ex sodales quis. Aliquam eu nibh in libero accumsan pulvinar. Nullam nec nisl placerat, pretium metus vel, euismod ipsum. Proin tempor cursus nisl vel condimentum. Nam pharetra varius metus non pellentesque.")]), _vm._v(" "), _c('h5', [_vm._v("Fifth level")]), _vm._v(" "), _c('p', [_vm._v("Aliquam sagittis rhoncus vulputate. Cras non luctus sem, sed tincidunt ligula. Vestibulum at nunc elit. Praesent aliquet ligula mi, in luctus elit volutpat porta. Phasellus molestie diam vel nisi sodales, a eleifend augue laoreet. Sed nec eleifend justo. Nam et sollicitudin odio.")]), _vm._v(" "), _vm._m(8), _vm._v(" "), _c('h6', [_vm._v("Sixth level")]), _vm._v(" "), _c('p', [_vm._v("Cras in nibh lacinia, venenatis nisi et, auctor urna. Donec pulvinar lacus sed diam dignissim, ut eleifend eros accumsan. Phasellus non tortor eros. Ut sed rutrum lacus. Etiam purus nunc, scelerisque quis enim vitae, malesuada ultrices turpis. Nunc vitae maximus purus, nec consectetur dui. Suspendisse euismod, elit vel rutrum commodo, ipsum tortor maximus dui, sed varius sapien odio vitae est. Etiam at cursus metus.")])], 1)])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('p', [_vm._v("Lorem ipsum"), _c('sup', [_c('a', [_vm._v("[1]")])]), _vm._v(" dolor sit amet, consectetur adipiscing elit. Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque. Sub"), _c('sub', [_vm._v("script")]), _vm._v(" works as well!")])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('p', [_vm._v("Curabitur accumsan turpis pharetra "), _c('strong', [_vm._v("augue tincidunt")]), _vm._v(" blandit. Quisque condimentum maximus mi, sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis. Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis. Donec at dignissim dui. Ut et neque nisl.")])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('ul', [_c('li', [_vm._v("In fermentum leo eu lectus mollis, quis dictum mi aliquet.")]), _vm._v(" "), _c('li', [_vm._v("Morbi eu nulla lobortis, lobortis est in, fringilla felis.")]), _vm._v(" "), _c('li', [_vm._v("Aliquam nec felis in sapien venenatis viverra fermentum nec lectus.")]), _vm._v(" "), _c('li', [_vm._v("Ut non enim metus.")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('p', [_vm._v("Quisque ante lacus, malesuada ac auctor vitae, congue "), _c('a', {
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("non ante")]), _vm._v(". Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.")])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('ol', [_c('li', [_vm._v("Donec blandit a lorem id convallis.")]), _vm._v(" "), _c('li', [_vm._v("Cras gravida arcu at diam gravida gravida.")]), _vm._v(" "), _c('li', [_vm._v("Integer in volutpat libero.")]), _vm._v(" "), _c('li', [_vm._v("Donec a diam tellus.")]), _vm._v(" "), _c('li', [_vm._v("Aenean nec tortor orci.")]), _vm._v(" "), _c('li', [_vm._v("Quisque aliquam cursus urna, non bibendum massa viverra eget.")]), _vm._v(" "), _c('li', [_vm._v("Vivamus maximus ultricies pulvinar.")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('p', [_vm._v("Quisque at semper enim, eu hendrerit odio. Etiam auctor nisl et "), _c('em', [_vm._v("justo sodales")]), _vm._v(" elementum. Maecenas ultrices lacus quis neque consectetur, et lobortis nisi molestie.")])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('dl', [_c('dt', [_vm._v("Web")]), _vm._v(" "), _c('dd', [_vm._v("The part of the Internet that contains websites and web pages")]), _vm._v(" "), _c('dt', [_vm._v("HTML")]), _vm._v(" "), _c('dd', [_vm._v("A markup language for creating web pages")]), _vm._v(" "), _c('dt', [_vm._v("CSS")]), _vm._v(" "), _c('dd', [_vm._v("A technology to make HTML look better")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('table', [_c('thead', [_c('tr', [_c('th', [_vm._v("One")]), _vm._v(" "), _c('th', [_vm._v("Two")])])]), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v("Three")]), _vm._v(" "), _c('td', [_vm._v("Four")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Five")]), _vm._v(" "), _c('td', [_vm._v("Six")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Seven")]), _vm._v(" "), _c('td', [_vm._v("Eight")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Nine")]), _vm._v(" "), _c('td', [_vm._v("Ten")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Eleven")]), _vm._v(" "), _c('td', [_vm._v("Twelve")])])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('figure', [_c('img', {
-    attrs: {
-      "src": "http://bulma.io/images/placeholders/256x256.png"
-    }
-  }), _vm._v(" "), _c('img', {
-    attrs: {
-      "src": "http://bulma.io/images/placeholders/256x256.png"
-    }
-  }), _vm._v(" "), _c('figcaption', [_vm._v("\n                Figure 1: Some beautiful placeholders\n              ")])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-9db0714a", module.exports)
-  }
-}
-
-/***/ }),
-/* 45 */,
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Component = __webpack_require__(11)(
-  /* script */
-  __webpack_require__(47),
-  /* template */
-  __webpack_require__(48),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-Component.options.__file = "C:\\Users\\Alex Raymond\\Projects\\srsbizniz\\resources\\assets\\js\\views\\Contact.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Contact.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-08d030ee", Component.options)
-  } else {
-    hotAPI.reload("data-v-08d030ee", Component.options)
   }
 })()}
 
@@ -3812,6 +3786,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
         console.log('Component mounted.');
+        document.getElementById('app').style.display = "block";
     }
 });
 
@@ -3820,6 +3795,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "container"
   }, [_c('div', {
@@ -3828,43 +3805,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "column"
   }, [_c('div', {
     staticClass: "content"
-  }, [_c('h1', [_vm._v("Contact & Stuff")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('h2', [_vm._v("Second level")]), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c('h3', [_vm._v("Third level")]), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4), _vm._v(" "), _c('blockquote', [_vm._v("Ut venenatis, nisl scelerisque sollicitudin fermentum, quam libero hendrerit ipsum, ut blandit est tellus sit amet turpis.")]), _vm._v(" "), _vm._m(5), _vm._v(" "), _c('p', [_vm._v("Sed sagittis enim ac tortor maximus rutrum. Nulla facilisi. Donec mattis vulputate risus in luctus. Maecenas vestibulum interdum commodo.")]), _vm._v(" "), _vm._m(6), _vm._v(" "), _c('p', [_vm._v("Suspendisse egestas sapien non felis placerat elementum. Morbi tortor nisl, suscipit sed mi sit amet, mollis malesuada nulla. Nulla facilisi. Nullam ac erat ante.")]), _vm._v(" "), _c('h4', [_vm._v("Fourth level")]), _vm._v(" "), _c('p', [_vm._v("Nulla efficitur eleifend nisi, sit amet bibendum sapien fringilla ac. Mauris euismod metus a tellus laoreet, at elementum ex efficitur.")]), _vm._v(" "), _c('pre', [_vm._v("<!DOCTYPE html>\n          <html>\n            <head>\n              <title>Hello World</title>\n            </head>\n            <body>\n              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra nec nulla vitae mollis.</p>\n            </body>\n          </html>")]), _vm._v(" "), _c('p', [_vm._v("Maecenas eleifend sollicitudin dui, faucibus sollicitudin augue cursus non. Ut finibus eleifend arcu ut vehicula. Mauris eu est maximus est porta condimentum in eu justo. Nulla id iaculis sapien.")]), _vm._v(" "), _vm._m(7), _vm._v(" "), _c('p', [_vm._v("Phasellus porttitor enim id metus volutpat ultricies. Ut nisi nunc, blandit sed dapibus at, vestibulum in felis. Etiam iaculis lorem ac nibh bibendum rhoncus. Nam interdum efficitur ligula sit amet ullamcorper. Etiam tristique, leo vitae porta faucibus, mi lacus laoreet metus, at cursus leo est vel tellus. Sed ac posuere est. Nunc ultricies nunc neque, vitae ultricies ex sodales quis. Aliquam eu nibh in libero accumsan pulvinar. Nullam nec nisl placerat, pretium metus vel, euismod ipsum. Proin tempor cursus nisl vel condimentum. Nam pharetra varius metus non pellentesque.")]), _vm._v(" "), _c('h5', [_vm._v("Fifth level")]), _vm._v(" "), _c('p', [_vm._v("Aliquam sagittis rhoncus vulputate. Cras non luctus sem, sed tincidunt ligula. Vestibulum at nunc elit. Praesent aliquet ligula mi, in luctus elit volutpat porta. Phasellus molestie diam vel nisi sodales, a eleifend augue laoreet. Sed nec eleifend justo. Nam et sollicitudin odio.")]), _vm._v(" "), _vm._m(8), _vm._v(" "), _c('h6', [_vm._v("Sixth level")]), _vm._v(" "), _c('p', [_vm._v("Cras in nibh lacinia, venenatis nisi et, auctor urna. Donec pulvinar lacus sed diam dignissim, ut eleifend eros accumsan. Phasellus non tortor eros. Ut sed rutrum lacus. Etiam purus nunc, scelerisque quis enim vitae, malesuada ultrices turpis. Nunc vitae maximus purus, nec consectetur dui. Suspendisse euismod, elit vel rutrum commodo, ipsum tortor maximus dui, sed varius sapien odio vitae est. Etiam at cursus metus.")])], 1)])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('p', [_vm._v("Lorem ipsum"), _c('sup', [_c('a', [_vm._v("[1]")])]), _vm._v(" dolor sit amet, consectetur adipiscing elit. Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque. Sub"), _c('sub', [_vm._v("script")]), _vm._v(" works as well!")])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('p', [_vm._v("Curabitur accumsan turpis pharetra "), _c('strong', [_vm._v("augue tincidunt")]), _vm._v(" blandit. Quisque condimentum maximus mi, sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis. Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis. Donec at dignissim dui. Ut et neque nisl.")])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('ul', [_c('li', [_vm._v("In fermentum leo eu lectus mollis, quis dictum mi aliquet.")]), _vm._v(" "), _c('li', [_vm._v("Morbi eu nulla lobortis, lobortis est in, fringilla felis.")]), _vm._v(" "), _c('li', [_vm._v("Aliquam nec felis in sapien venenatis viverra fermentum nec lectus.")]), _vm._v(" "), _c('li', [_vm._v("Ut non enim metus.")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('p', [_vm._v("Quisque ante lacus, malesuada ac auctor vitae, congue "), _c('a', {
+  }, [_c('h1', [_vm._v("About Hello World")]), _vm._v(" "), _c('p', [_vm._v("Lorem ipsum"), _c('sup', [_c('a', [_vm._v("[1]")])]), _vm._v(" dolor sit amet, consectetur adipiscing elit. Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque. Sub"), _c('sub', [_vm._v("script")]), _vm._v(" works as well!")]), _vm._v(" "), _c('h2', [_vm._v("Second level")]), _vm._v(" "), _c('p', [_vm._v("Curabitur accumsan turpis pharetra "), _c('strong', [_vm._v("augue tincidunt")]), _vm._v(" blandit. Quisque condimentum maximus mi, sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis. Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis. Donec at dignissim dui. Ut et neque nisl.")]), _vm._v(" "), _c('ul', [_c('li', [_vm._v("In fermentum leo eu lectus mollis, quis dictum mi aliquet.")]), _vm._v(" "), _c('li', [_vm._v("Morbi eu nulla lobortis, lobortis est in, fringilla felis.")]), _vm._v(" "), _c('li', [_vm._v("Aliquam nec felis in sapien venenatis viverra fermentum nec lectus.")]), _vm._v(" "), _c('li', [_vm._v("Ut non enim metus.")])]), _vm._v(" "), _c('h3', [_vm._v("Third level")]), _vm._v(" "), _c('p', [_vm._v("Quisque ante lacus, malesuada ac auctor vitae, congue "), _c('a', {
     attrs: {
       "href": "#"
     }
-  }, [_vm._v("non ante")]), _vm._v(". Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.")])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('ol', [_c('li', [_vm._v("Donec blandit a lorem id convallis.")]), _vm._v(" "), _c('li', [_vm._v("Cras gravida arcu at diam gravida gravida.")]), _vm._v(" "), _c('li', [_vm._v("Integer in volutpat libero.")]), _vm._v(" "), _c('li', [_vm._v("Donec a diam tellus.")]), _vm._v(" "), _c('li', [_vm._v("Aenean nec tortor orci.")]), _vm._v(" "), _c('li', [_vm._v("Quisque aliquam cursus urna, non bibendum massa viverra eget.")]), _vm._v(" "), _c('li', [_vm._v("Vivamus maximus ultricies pulvinar.")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('p', [_vm._v("Quisque at semper enim, eu hendrerit odio. Etiam auctor nisl et "), _c('em', [_vm._v("justo sodales")]), _vm._v(" elementum. Maecenas ultrices lacus quis neque consectetur, et lobortis nisi molestie.")])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('dl', [_c('dt', [_vm._v("Web")]), _vm._v(" "), _c('dd', [_vm._v("The part of the Internet that contains websites and web pages")]), _vm._v(" "), _c('dt', [_vm._v("HTML")]), _vm._v(" "), _c('dd', [_vm._v("A markup language for creating web pages")]), _vm._v(" "), _c('dt', [_vm._v("CSS")]), _vm._v(" "), _c('dd', [_vm._v("A technology to make HTML look better")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('table', [_c('thead', [_c('tr', [_c('th', [_vm._v("One")]), _vm._v(" "), _c('th', [_vm._v("Two")])])]), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v("Three")]), _vm._v(" "), _c('td', [_vm._v("Four")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Five")]), _vm._v(" "), _c('td', [_vm._v("Six")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Seven")]), _vm._v(" "), _c('td', [_vm._v("Eight")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Nine")]), _vm._v(" "), _c('td', [_vm._v("Ten")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Eleven")]), _vm._v(" "), _c('td', [_vm._v("Twelve")])])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('figure', [_c('img', {
+  }, [_vm._v("non ante")]), _vm._v(". Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.")]), _vm._v(" "), _c('ol', [_c('li', [_vm._v("Donec blandit a lorem id convallis.")]), _vm._v(" "), _c('li', [_vm._v("Cras gravida arcu at diam gravida gravida.")]), _vm._v(" "), _c('li', [_vm._v("Integer in volutpat libero.")]), _vm._v(" "), _c('li', [_vm._v("Donec a diam tellus.")]), _vm._v(" "), _c('li', [_vm._v("Aenean nec tortor orci.")]), _vm._v(" "), _c('li', [_vm._v("Quisque aliquam cursus urna, non bibendum massa viverra eget.")]), _vm._v(" "), _c('li', [_vm._v("Vivamus maximus ultricies pulvinar.")])]), _vm._v(" "), _c('blockquote', [_vm._v("Ut venenatis, nisl scelerisque sollicitudin fermentum, quam libero hendrerit ipsum, ut blandit est tellus sit amet turpis.")]), _vm._v(" "), _c('p', [_vm._v("Quisque at semper enim, eu hendrerit odio. Etiam auctor nisl et "), _c('em', [_vm._v("justo sodales")]), _vm._v(" elementum. Maecenas ultrices lacus quis neque consectetur, et lobortis nisi molestie.")]), _vm._v(" "), _c('p', [_vm._v("Sed sagittis enim ac tortor maximus rutrum. Nulla facilisi. Donec mattis vulputate risus in luctus. Maecenas vestibulum interdum commodo.")]), _vm._v(" "), _c('dl', [_c('dt', [_vm._v("Web")]), _vm._v(" "), _c('dd', [_vm._v("The part of the Internet that contains websites and web pages")]), _vm._v(" "), _c('dt', [_vm._v("HTML")]), _vm._v(" "), _c('dd', [_vm._v("A markup language for creating web pages")]), _vm._v(" "), _c('dt', [_vm._v("CSS")]), _vm._v(" "), _c('dd', [_vm._v("A technology to make HTML look better")])]), _vm._v(" "), _c('p', [_vm._v("Suspendisse egestas sapien non felis placerat elementum. Morbi tortor nisl, suscipit sed mi sit amet, mollis malesuada nulla. Nulla facilisi. Nullam ac erat ante.")]), _vm._v(" "), _c('h4', [_vm._v("Fourth level")]), _vm._v(" "), _c('p', [_vm._v("Nulla efficitur eleifend nisi, sit amet bibendum sapien fringilla ac. Mauris euismod metus a tellus laoreet, at elementum ex efficitur.")]), _vm._v(" "), _c('pre', [_vm._v("<!DOCTYPE html>\n          <html>\n            <head>\n              <title>Hello World</title>\n            </head>\n            <body>\n              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra nec nulla vitae mollis.</p>\n            </body>\n          </html>")]), _vm._v(" "), _c('p', [_vm._v("Maecenas eleifend sollicitudin dui, faucibus sollicitudin augue cursus non. Ut finibus eleifend arcu ut vehicula. Mauris eu est maximus est porta condimentum in eu justo. Nulla id iaculis sapien.")]), _vm._v(" "), _c('table', [_c('thead', [_c('tr', [_c('th', [_vm._v("One")]), _vm._v(" "), _c('th', [_vm._v("Two")])])]), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v("Three")]), _vm._v(" "), _c('td', [_vm._v("Four")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Five")]), _vm._v(" "), _c('td', [_vm._v("Six")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Seven")]), _vm._v(" "), _c('td', [_vm._v("Eight")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Nine")]), _vm._v(" "), _c('td', [_vm._v("Ten")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Eleven")]), _vm._v(" "), _c('td', [_vm._v("Twelve")])])])]), _vm._v(" "), _c('p', [_vm._v("Phasellus porttitor enim id metus volutpat ultricies. Ut nisi nunc, blandit sed dapibus at, vestibulum in felis. Etiam iaculis lorem ac nibh bibendum rhoncus. Nam interdum efficitur ligula sit amet ullamcorper. Etiam tristique, leo vitae porta faucibus, mi lacus laoreet metus, at cursus leo est vel tellus. Sed ac posuere est. Nunc ultricies nunc neque, vitae ultricies ex sodales quis. Aliquam eu nibh in libero accumsan pulvinar. Nullam nec nisl placerat, pretium metus vel, euismod ipsum. Proin tempor cursus nisl vel condimentum. Nam pharetra varius metus non pellentesque.")]), _vm._v(" "), _c('h5', [_vm._v("Fifth level")]), _vm._v(" "), _c('p', [_vm._v("Aliquam sagittis rhoncus vulputate. Cras non luctus sem, sed tincidunt ligula. Vestibulum at nunc elit. Praesent aliquet ligula mi, in luctus elit volutpat porta. Phasellus molestie diam vel nisi sodales, a eleifend augue laoreet. Sed nec eleifend justo. Nam et sollicitudin odio.")]), _vm._v(" "), _c('figure', [_c('img', {
     attrs: {
-      "src": "http://bulma.io/images/placeholders/256x256.png"
+      "src": "images/256x256.png"
     }
   }), _vm._v(" "), _c('img', {
     attrs: {
-      "src": "http://bulma.io/images/placeholders/256x256.png"
+      "src": "images/256x256.png"
     }
-  }), _vm._v(" "), _c('figcaption', [_vm._v("\n                Figure 1: Some beautiful placeholders\n              ")])])
+  }), _vm._v(" "), _c('figcaption', [_vm._v("\n                Figure 1: Some beautiful placeholders\n              ")])]), _vm._v(" "), _c('h6', [_vm._v("Sixth level")]), _vm._v(" "), _c('p', [_vm._v("Cras in nibh lacinia, venenatis nisi et, auctor urna. Donec pulvinar lacus sed diam dignissim, ut eleifend eros accumsan. Phasellus non tortor eros. Ut sed rutrum lacus. Etiam purus nunc, scelerisque quis enim vitae, malesuada ultrices turpis. Nunc vitae maximus purus, nec consectetur dui. Suspendisse euismod, elit vel rutrum commodo, ipsum tortor maximus dui, sed varius sapien odio vitae est. Etiam at cursus metus.")])])])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-08d030ee", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-9db0714a", module.exports)
   }
 }
 
@@ -3872,7 +3831,7 @@ if (false) {
 /* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Component = __webpack_require__(11)(
+var Component = __webpack_require__(2)(
   /* script */
   __webpack_require__(50),
   /* template */
@@ -3882,9 +3841,9 @@ var Component = __webpack_require__(11)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\Users\\Alex Raymond\\Projects\\srsbizniz\\resources\\assets\\js\\views\\Posts.vue"
+Component.options.__file = "C:\\Users\\Alex Raymond\\Projects\\srsbizniz\\resources\\assets\\js\\views\\Contact.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Posts.vue: functional components are not supported with templates, they should use render functions.")}
+if (Component.options.functional) {console.error("[vue-loader] Contact.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -3893,9 +3852,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-796f8ca1", Component.options)
+    hotAPI.createRecord("data-v-08d030ee", Component.options)
   } else {
-    hotAPI.reload("data-v-796f8ca1", Component.options)
+    hotAPI.reload("data-v-08d030ee", Component.options)
   }
 })()}
 
@@ -3949,10 +3908,68 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
         console.log('Component mounted.');
+        document.getElementById('app').style.display = "block";
     }
 });
 
@@ -3971,49 +3988,211 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "column"
   }, [_c('div', {
     staticClass: "content"
-  }, [_c('article', {
-    staticClass: "media"
-  }, [_c('figure', {
-    staticClass: "media-left"
-  }, [_c('p', {
-    staticClass: "image is-64x64"
-  }, [_c('img', {
+  }, [_c('h1', [_vm._v("Contact & Stuff")]), _vm._v(" "), _c('p', [_vm._v("Lorem ipsum"), _c('sup', [_c('a', [_vm._v("[1]")])]), _vm._v(" dolor sit amet, consectetur adipiscing elit. Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque. Sub"), _c('sub', [_vm._v("script")]), _vm._v(" works as well!")]), _vm._v(" "), _c('h2', [_vm._v("Second level")]), _vm._v(" "), _c('p', [_vm._v("Curabitur accumsan turpis pharetra "), _c('strong', [_vm._v("augue tincidunt")]), _vm._v(" blandit. Quisque condimentum maximus mi, sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis. Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis. Donec at dignissim dui. Ut et neque nisl.")]), _vm._v(" "), _c('ul', [_c('li', [_vm._v("In fermentum leo eu lectus mollis, quis dictum mi aliquet.")]), _vm._v(" "), _c('li', [_vm._v("Morbi eu nulla lobortis, lobortis est in, fringilla felis.")]), _vm._v(" "), _c('li', [_vm._v("Aliquam nec felis in sapien venenatis viverra fermentum nec lectus.")]), _vm._v(" "), _c('li', [_vm._v("Ut non enim metus.")])]), _vm._v(" "), _c('h3', [_vm._v("Third level")]), _vm._v(" "), _c('p', [_vm._v("Quisque ante lacus, malesuada ac auctor vitae, congue "), _c('a', {
     attrs: {
-      "src": "http://bulma.io/images/placeholders/128x128.png"
+      "href": "#"
     }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "media-content"
-  }, [_c('div', {
-    staticClass: "content"
-  }, [_c('p', [_c('strong', [_vm._v("John Smith")]), _vm._v(" "), _c('small', [_vm._v("@johnsmith")]), _vm._v(" "), _c('small', [_vm._v("31m")]), _vm._v(" "), _c('br'), _vm._v("\n                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.\n                  ")])]), _vm._v(" "), _c('nav', {
-    staticClass: "level is-mobile"
-  }, [_c('div', {
-    staticClass: "level-left"
-  }, [_c('a', {
-    staticClass: "level-item"
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fa fa-reply"
-  })])]), _vm._v(" "), _c('a', {
-    staticClass: "level-item"
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fa fa-retweet"
-  })])]), _vm._v(" "), _c('a', {
-    staticClass: "level-item"
-  }, [_c('span', {
-    staticClass: "icon is-small"
-  }, [_c('i', {
-    staticClass: "fa fa-heart"
-  })])])])])])])])])])])
+  }, [_vm._v("non ante")]), _vm._v(". Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.")]), _vm._v(" "), _c('ol', [_c('li', [_vm._v("Donec blandit a lorem id convallis.")]), _vm._v(" "), _c('li', [_vm._v("Cras gravida arcu at diam gravida gravida.")]), _vm._v(" "), _c('li', [_vm._v("Integer in volutpat libero.")]), _vm._v(" "), _c('li', [_vm._v("Donec a diam tellus.")]), _vm._v(" "), _c('li', [_vm._v("Aenean nec tortor orci.")]), _vm._v(" "), _c('li', [_vm._v("Quisque aliquam cursus urna, non bibendum massa viverra eget.")]), _vm._v(" "), _c('li', [_vm._v("Vivamus maximus ultricies pulvinar.")])]), _vm._v(" "), _c('blockquote', [_vm._v("Ut venenatis, nisl scelerisque sollicitudin fermentum, quam libero hendrerit ipsum, ut blandit est tellus sit amet turpis.")]), _vm._v(" "), _c('p', [_vm._v("Quisque at semper enim, eu hendrerit odio. Etiam auctor nisl et "), _c('em', [_vm._v("justo sodales")]), _vm._v(" elementum. Maecenas ultrices lacus quis neque consectetur, et lobortis nisi molestie.")]), _vm._v(" "), _c('p', [_vm._v("Sed sagittis enim ac tortor maximus rutrum. Nulla facilisi. Donec mattis vulputate risus in luctus. Maecenas vestibulum interdum commodo.")]), _vm._v(" "), _c('dl', [_c('dt', [_vm._v("Web")]), _vm._v(" "), _c('dd', [_vm._v("The part of the Internet that contains websites and web pages")]), _vm._v(" "), _c('dt', [_vm._v("HTML")]), _vm._v(" "), _c('dd', [_vm._v("A markup language for creating web pages")]), _vm._v(" "), _c('dt', [_vm._v("CSS")]), _vm._v(" "), _c('dd', [_vm._v("A technology to make HTML look better")])]), _vm._v(" "), _c('p', [_vm._v("Suspendisse egestas sapien non felis placerat elementum. Morbi tortor nisl, suscipit sed mi sit amet, mollis malesuada nulla. Nulla facilisi. Nullam ac erat ante.")]), _vm._v(" "), _c('h4', [_vm._v("Fourth level")]), _vm._v(" "), _c('p', [_vm._v("Nulla efficitur eleifend nisi, sit amet bibendum sapien fringilla ac. Mauris euismod metus a tellus laoreet, at elementum ex efficitur.")]), _vm._v(" "), _c('pre', [_vm._v("<!DOCTYPE html>\n          <html>\n            <head>\n              <title>Hello World</title>\n            </head>\n            <body>\n              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra nec nulla vitae mollis.</p>\n            </body>\n          </html>")]), _vm._v(" "), _c('p', [_vm._v("Maecenas eleifend sollicitudin dui, faucibus sollicitudin augue cursus non. Ut finibus eleifend arcu ut vehicula. Mauris eu est maximus est porta condimentum in eu justo. Nulla id iaculis sapien.")]), _vm._v(" "), _c('table', [_c('thead', [_c('tr', [_c('th', [_vm._v("One")]), _vm._v(" "), _c('th', [_vm._v("Two")])])]), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v("Three")]), _vm._v(" "), _c('td', [_vm._v("Four")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Five")]), _vm._v(" "), _c('td', [_vm._v("Six")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Seven")]), _vm._v(" "), _c('td', [_vm._v("Eight")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Nine")]), _vm._v(" "), _c('td', [_vm._v("Ten")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Eleven")]), _vm._v(" "), _c('td', [_vm._v("Twelve")])])])]), _vm._v(" "), _c('p', [_vm._v("Phasellus porttitor enim id metus volutpat ultricies. Ut nisi nunc, blandit sed dapibus at, vestibulum in felis. Etiam iaculis lorem ac nibh bibendum rhoncus. Nam interdum efficitur ligula sit amet ullamcorper. Etiam tristique, leo vitae porta faucibus, mi lacus laoreet metus, at cursus leo est vel tellus. Sed ac posuere est. Nunc ultricies nunc neque, vitae ultricies ex sodales quis. Aliquam eu nibh in libero accumsan pulvinar. Nullam nec nisl placerat, pretium metus vel, euismod ipsum. Proin tempor cursus nisl vel condimentum. Nam pharetra varius metus non pellentesque.")]), _vm._v(" "), _c('h5', [_vm._v("Fifth level")]), _vm._v(" "), _c('p', [_vm._v("Aliquam sagittis rhoncus vulputate. Cras non luctus sem, sed tincidunt ligula. Vestibulum at nunc elit. Praesent aliquet ligula mi, in luctus elit volutpat porta. Phasellus molestie diam vel nisi sodales, a eleifend augue laoreet. Sed nec eleifend justo. Nam et sollicitudin odio.")]), _vm._v(" "), _c('figure', [_c('img', {
+    attrs: {
+      "src": "images/256x256.png"
+    }
+  }), _vm._v(" "), _c('img', {
+    attrs: {
+      "src": "images/256x256.png"
+    }
+  }), _vm._v(" "), _c('figcaption', [_vm._v("\n                Figure 1: Some beautiful placeholders\n              ")])]), _vm._v(" "), _c('h6', [_vm._v("Sixth level")]), _vm._v(" "), _c('p', [_vm._v("Cras in nibh lacinia, venenatis nisi et, auctor urna. Donec pulvinar lacus sed diam dignissim, ut eleifend eros accumsan. Phasellus non tortor eros. Ut sed rutrum lacus. Etiam purus nunc, scelerisque quis enim vitae, malesuada ultrices turpis. Nunc vitae maximus purus, nec consectetur dui. Suspendisse euismod, elit vel rutrum commodo, ipsum tortor maximus dui, sed varius sapien odio vitae est. Etiam at cursus metus.")])])])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-796f8ca1", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-08d030ee", module.exports)
+  }
+}
+
+/***/ }),
+/* 52 */,
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(54),
+  /* template */
+  __webpack_require__(55),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\Users\\Alex Raymond\\Projects\\srsbizniz\\resources\\assets\\js\\views\\Projects.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Projects.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-00b6da9c", Component.options)
+  } else {
+    hotAPI.reload("data-v-00b6da9c", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 54 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+        console.log('Component mounted.');
+        document.getElementById('app').style.display = "block";
+    }
+});
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "container"
+  }, [_c('div', {
+    staticClass: "columns"
+  }, [_c('div', {
+    staticClass: "column"
+  }, [_c('div', {
+    staticClass: "content"
+  }, [_c('h1', [_vm._v("Current & Past Projects")]), _vm._v(" "), _c('p', [_vm._v("Lorem ipsum"), _c('sup', [_c('a', [_vm._v("[1]")])]), _vm._v(" dolor sit amet, consectetur adipiscing elit. Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque. Sub"), _c('sub', [_vm._v("script")]), _vm._v(" works as well!")]), _vm._v(" "), _c('h2', [_vm._v("Second level")]), _vm._v(" "), _c('p', [_vm._v("Curabitur accumsan turpis pharetra "), _c('strong', [_vm._v("augue tincidunt")]), _vm._v(" blandit. Quisque condimentum maximus mi, sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis. Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis. Donec at dignissim dui. Ut et neque nisl.")]), _vm._v(" "), _c('ul', [_c('li', [_vm._v("In fermentum leo eu lectus mollis, quis dictum mi aliquet.")]), _vm._v(" "), _c('li', [_vm._v("Morbi eu nulla lobortis, lobortis est in, fringilla felis.")]), _vm._v(" "), _c('li', [_vm._v("Aliquam nec felis in sapien venenatis viverra fermentum nec lectus.")]), _vm._v(" "), _c('li', [_vm._v("Ut non enim metus.")])]), _vm._v(" "), _c('h3', [_vm._v("Third level")]), _vm._v(" "), _c('p', [_vm._v("Quisque ante lacus, malesuada ac auctor vitae, congue "), _c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("non ante")]), _vm._v(". Phasellus lacus ex, semper ac tortor nec, fringilla condimentum orci. Fusce eu rutrum tellus.")]), _vm._v(" "), _c('ol', [_c('li', [_vm._v("Donec blandit a lorem id convallis.")]), _vm._v(" "), _c('li', [_vm._v("Cras gravida arcu at diam gravida gravida.")]), _vm._v(" "), _c('li', [_vm._v("Integer in volutpat libero.")]), _vm._v(" "), _c('li', [_vm._v("Donec a diam tellus.")]), _vm._v(" "), _c('li', [_vm._v("Aenean nec tortor orci.")]), _vm._v(" "), _c('li', [_vm._v("Quisque aliquam cursus urna, non bibendum massa viverra eget.")]), _vm._v(" "), _c('li', [_vm._v("Vivamus maximus ultricies pulvinar.")])]), _vm._v(" "), _c('blockquote', [_vm._v("Ut venenatis, nisl scelerisque sollicitudin fermentum, quam libero hendrerit ipsum, ut blandit est tellus sit amet turpis.")]), _vm._v(" "), _c('p', [_vm._v("Quisque at semper enim, eu hendrerit odio. Etiam auctor nisl et "), _c('em', [_vm._v("justo sodales")]), _vm._v(" elementum. Maecenas ultrices lacus quis neque consectetur, et lobortis nisi molestie.")]), _vm._v(" "), _c('p', [_vm._v("Sed sagittis enim ac tortor maximus rutrum. Nulla facilisi. Donec mattis vulputate risus in luctus. Maecenas vestibulum interdum commodo.")]), _vm._v(" "), _c('dl', [_c('dt', [_vm._v("Web")]), _vm._v(" "), _c('dd', [_vm._v("The part of the Internet that contains websites and web pages")]), _vm._v(" "), _c('dt', [_vm._v("HTML")]), _vm._v(" "), _c('dd', [_vm._v("A markup language for creating web pages")]), _vm._v(" "), _c('dt', [_vm._v("CSS")]), _vm._v(" "), _c('dd', [_vm._v("A technology to make HTML look better")])]), _vm._v(" "), _c('p', [_vm._v("Suspendisse egestas sapien non felis placerat elementum. Morbi tortor nisl, suscipit sed mi sit amet, mollis malesuada nulla. Nulla facilisi. Nullam ac erat ante.")]), _vm._v(" "), _c('h4', [_vm._v("Fourth level")]), _vm._v(" "), _c('p', [_vm._v("Nulla efficitur eleifend nisi, sit amet bibendum sapien fringilla ac. Mauris euismod metus a tellus laoreet, at elementum ex efficitur.")]), _vm._v(" "), _c('pre', [_vm._v("<!DOCTYPE html>\n          <html>\n            <head>\n              <title>Hello World</title>\n            </head>\n            <body>\n              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra nec nulla vitae mollis.</p>\n            </body>\n          </html>")]), _vm._v(" "), _c('p', [_vm._v("Maecenas eleifend sollicitudin dui, faucibus sollicitudin augue cursus non. Ut finibus eleifend arcu ut vehicula. Mauris eu est maximus est porta condimentum in eu justo. Nulla id iaculis sapien.")]), _vm._v(" "), _c('table', [_c('thead', [_c('tr', [_c('th', [_vm._v("One")]), _vm._v(" "), _c('th', [_vm._v("Two")])])]), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v("Three")]), _vm._v(" "), _c('td', [_vm._v("Four")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Five")]), _vm._v(" "), _c('td', [_vm._v("Six")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Seven")]), _vm._v(" "), _c('td', [_vm._v("Eight")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Nine")]), _vm._v(" "), _c('td', [_vm._v("Ten")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("Eleven")]), _vm._v(" "), _c('td', [_vm._v("Twelve")])])])]), _vm._v(" "), _c('p', [_vm._v("Phasellus porttitor enim id metus volutpat ultricies. Ut nisi nunc, blandit sed dapibus at, vestibulum in felis. Etiam iaculis lorem ac nibh bibendum rhoncus. Nam interdum efficitur ligula sit amet ullamcorper. Etiam tristique, leo vitae porta faucibus, mi lacus laoreet metus, at cursus leo est vel tellus. Sed ac posuere est. Nunc ultricies nunc neque, vitae ultricies ex sodales quis. Aliquam eu nibh in libero accumsan pulvinar. Nullam nec nisl placerat, pretium metus vel, euismod ipsum. Proin tempor cursus nisl vel condimentum. Nam pharetra varius metus non pellentesque.")]), _vm._v(" "), _c('h5', [_vm._v("Fifth level")]), _vm._v(" "), _c('p', [_vm._v("Aliquam sagittis rhoncus vulputate. Cras non luctus sem, sed tincidunt ligula. Vestibulum at nunc elit. Praesent aliquet ligula mi, in luctus elit volutpat porta. Phasellus molestie diam vel nisi sodales, a eleifend augue laoreet. Sed nec eleifend justo. Nam et sollicitudin odio.")]), _vm._v(" "), _c('figure', [_c('img', {
+    attrs: {
+      "src": "images/256x256.png"
+    }
+  }), _vm._v(" "), _c('img', {
+    attrs: {
+      "src": "images/256x256.png"
+    }
+  }), _vm._v(" "), _c('figcaption', [_vm._v("\n                Figure 1: Some beautiful placeholders\n              ")])]), _vm._v(" "), _c('h6', [_vm._v("Sixth level")]), _vm._v(" "), _c('p', [_vm._v("Cras in nibh lacinia, venenatis nisi et, auctor urna. Donec pulvinar lacus sed diam dignissim, ut eleifend eros accumsan. Phasellus non tortor eros. Ut sed rutrum lacus. Etiam purus nunc, scelerisque quis enim vitae, malesuada ultrices turpis. Nunc vitae maximus purus, nec consectetur dui. Suspendisse euismod, elit vel rutrum commodo, ipsum tortor maximus dui, sed varius sapien odio vitae est. Etiam at cursus metus.")])])])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-00b6da9c", module.exports)
   }
 }
 
